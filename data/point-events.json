@@ -1,0 +1,8 @@
+[
+  { "id": "atividade-prazo", "label": "Entregou atividade no prazo", "points": 10, "category": "consistencia" },
+  { "id": "desafio-tecnico", "label": "Resolveu desafio tecnico", "points": 20, "category": "performance" },
+  { "id": "ajuda-colega", "label": "Ajudou colega em atividade colaborativa", "points": 15, "category": "colaboracao" },
+  { "id": "projeto-evento", "label": "Participou de projeto, feira ou apresentacao", "points": 25, "category": "protagonismo" },
+  { "id": "frequencia-semana", "label": "Frequencia destacada da semana", "points": 5, "category": "consistencia" },
+  { "id": "missao-especial", "label": "Missao especial concluida", "points": 30, "category": "evolucao" }
+]

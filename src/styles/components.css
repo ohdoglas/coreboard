@@ -1,0 +1,484 @@
+.metric-card {
+  min-height: 132px;
+  padding: 18px;
+}
+
+.metric-card__label {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  margin-bottom: 12px;
+}
+
+.metric-card__value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.metric-card__note {
+  margin: 10px 0 0;
+  color: var(--color-cyan);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.ranking-table {
+  width: 100%;
+  min-width: 580px;
+  border-collapse: collapse;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ranking-table th {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.ranking-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.rank-pill {
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--color-on-accent);
+  background: var(--color-lime);
+  font-weight: 900;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.identity img {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-strong);
+}
+
+.identity strong {
+  display: block;
+}
+
+.identity span {
+  display: block;
+  color: var(--color-muted);
+  margin-top: 3px;
+  font-size: 0.86rem;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.badge-card {
+  min-height: 102px;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+}
+
+.badge-card img {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-sm);
+}
+
+.badge-card strong {
+  display: block;
+}
+
+.badge-card span {
+  color: var(--color-muted);
+  display: block;
+  font-size: 0.86rem;
+  margin-top: 4px;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-lime));
+}
+
+.profile-hero {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 22px;
+}
+
+.profile-hero img {
+  width: 148px;
+  height: 148px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-strong);
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.mini-stat {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mini-stat span {
+  color: var(--color-muted);
+  display: block;
+  font-size: 0.8rem;
+}
+
+.mini-stat strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 6px;
+}
+
+.search-panel {
+  padding: 18px;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(19, 220, 242, 0.5);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: rgba(0, 6, 13, 0.86);
+  padding: 0 16px;
+}
+
+.search-input:focus {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+}
+
+.search-results {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.result-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px;
+}
+
+.privacy-note {
+  border-left: 4px solid var(--color-lime);
+  padding: 14px 16px;
+  color: var(--color-muted);
+}
+
+.empty-state {
+  color: var(--color-muted);
+  margin: 0;
+  padding: 18px;
+}
+
+.class-card {
+  padding: 18px;
+}
+
+.class-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sparkline {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: end;
+  gap: 6px;
+  min-height: 70px;
+  margin-top: 18px;
+}
+
+.sparkline span {
+  min-height: 10px;
+  border-radius: 999px 999px 3px 3px;
+  background: linear-gradient(180deg, var(--color-lime), var(--color-cyan));
+}
+
+.teacher-shell {
+  padding: 20px;
+}
+
+.teacher-login {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.55fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.teacher-login p,
+.teacher-toolbar p {
+  color: var(--color-muted);
+  margin-bottom: 0;
+}
+
+.teacher-app[hidden],
+.teacher-login[hidden],
+.teacher-section {
+  display: none;
+}
+
+.teacher-section.active {
+  display: block;
+}
+
+.teacher-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.teacher-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.github-config {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 12px;
+  align-items: end;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.teacher-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+}
+
+.teacher-tabs button {
+  min-height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.teacher-tabs button.active,
+.teacher-tabs button:hover,
+.teacher-tabs button:focus-visible {
+  color: var(--color-on-accent);
+  background: var(--color-lime);
+  outline: none;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.admin-grid > * {
+  min-width: 0;
+}
+
+.teacher-form {
+  display: grid;
+  gap: 12px;
+}
+
+.teacher-form h2 {
+  margin-bottom: 2px;
+}
+
+.teacher-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.teacher-form input,
+.teacher-form select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: rgba(0, 6, 13, 0.86);
+  padding: 0 12px;
+}
+
+.teacher-form input:focus,
+.teacher-form select:focus {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+}
+
+.teacher-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.admin-editor {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 16px;
+}
+
+.admin-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+}
+
+.admin-row strong {
+  display: block;
+}
+
+.admin-row span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  margin-top: 4px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.check-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-row input {
+  width: 18px;
+  min-height: 18px;
+}
+
+.form-message {
+  min-height: 20px;
+  color: var(--color-lime);
+  font-weight: 700;
+  margin: 0;
+}
+
+.form-message.error {
+  color: #ff8f8f;
+}
+
+@media (max-width: 720px) {
+  .ranking-table th,
+  .ranking-table td {
+    padding: 12px;
+  }
+
+  .profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .teacher-login,
+  .admin-grid,
+  .github-config {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-actions,
+  .row-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

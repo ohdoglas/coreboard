@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "label", "points", "category"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "label": { "type": "string", "minLength": 4 },
+    "points": { "type": "integer" },
+    "category": {
+      "type": "string",
+      "enum": ["performance", "consistencia", "colaboracao", "protagonismo", "evolucao"]
+    }
+  }
+}

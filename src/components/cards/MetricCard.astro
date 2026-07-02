@@ -1,0 +1,15 @@
+---
+type Props = {
+  label: string;
+  value: string | number;
+  note?: string;
+};
+
+const { label, value, note } = Astro.props;
+---
+
+<article class="metric-card surface">
+  <p class="metric-card__label">{label}</p>
+  <p class="metric-card__value">{value}</p>
+  {note && <p class="metric-card__note">{note}</p>}
+</article>

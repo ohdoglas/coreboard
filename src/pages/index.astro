@@ -1,0 +1,72 @@
+---
+import AppLayout from '../components/layout/AppLayout.astro';
+import MainBanner from '../components/layout/MainBanner.astro';
+import MetricCard from '../components/cards/MetricCard.astro';
+import BadgeGrid from '../components/badges/BadgeGrid.astro';
+import StudentRankingTable from '../components/ranking/StudentRankingTable.astro';
+import ClassRankingTable from '../components/ranking/ClassRankingTable.astro';
+import { achievements, badges, schoolClasses, students } from '../lib/data';
+import { formatPoints, numberFormatter } from '../lib/formatters';
+import { rankClasses, rankStudents } from '../lib/ranking';
+import { withBase } from '../lib/url';
+
+const studentRanking = rankStudents(students);
+const classRanking = rankClasses(schoolClasses, students);
+const totalPoints = students.reduce((sum, student) => sum + student.pointsTotal, 0);
+const totalAura = students.reduce((sum, student) => sum + student.aura, 0);
+const featuredBadges = badges.slice(0, 6);
+---
+
+<AppLayout title="Dashboard">
+  <MainBanner overlap="animated" />
+
+  <section class="grid metrics" aria-label="Resumo do dashboard">
+    <MetricCard label="Alunos cadastrados" value={students.length} note="Perfis ativos no coreboard" />
+    <MetricCard label="Turmas cadastradas" value={schoolClasses.length} note="Ranking coletivo" />
+    <MetricCard label="Pontos totais" value={formatPoints(totalPoints)} note="Base do ranking global" />
+    <MetricCard label="Aura total" value={totalAura} note="Moeda social do sistema" />
+  </section>
+
+  <section class="section grid two">
+    <div>
+      <div class="section-header">
+        <div>
+          <h2>Ranking global</h2>
+          <p>Ordenado por pontos totais, com aura como desempate.</p>
+        </div>
+        <a class="button secondary" href={withBase('/ranking-alunos/')}>Ver alunos</a>
+      </div>
+      <StudentRankingTable students={studentRanking} limit={5} />
+    </div>
+
+    <aside>
+      <div class="section-header">
+        <div>
+          <h2>Badges de hardware</h2>
+          <p>Reconhecimentos inspirados nos modulos do curso.</p>
+        </div>
+      </div>
+      <BadgeGrid badges={featuredBadges} />
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2>Ranking de turmas</h2>
+        <p>Score coletivo calculado por media de pontos e aura.</p>
+      </div>
+      <a class="button secondary" href={withBase('/ranking-turmas/')}>Ver turmas</a>
+    </div>
+    <ClassRankingTable classes={classRanking} />
+  </section>
+
+  <section class="section privacy-note surface">
+    <strong>Base pronta para cadastro</strong>
+    <p>
+      O arquivo de alunos esta vazio para voce iniciar os registros pelo painel do professor.
+      Ja existem {numberFormatter.format(badges.length)} badges e {numberFormatter.format(achievements.length)}
+      conquistas iniciais baseadas nos modulos de hardware e robotica.
+    </p>
+  </section>
+</AppLayout>

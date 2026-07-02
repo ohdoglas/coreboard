@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "name", "description", "points", "aura", "type"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string", "minLength": 2 },
+    "description": { "type": "string", "minLength": 8 },
+    "points": { "type": "integer", "minimum": 0 },
+    "aura": { "type": "integer", "minimum": 0 },
+    "type": { "type": "string", "enum": ["individual", "class", "mixed"] }
+  }
+}

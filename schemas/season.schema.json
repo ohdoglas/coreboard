@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "name", "startsAt", "endsAt", "isCurrent"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9.-]+$" },
+    "name": { "type": "string", "minLength": 2 },
+    "startsAt": { "type": "string", "format": "date" },
+    "endsAt": { "type": "string", "format": "date" },
+    "isCurrent": { "type": "boolean" }
+  }
+}

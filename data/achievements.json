@@ -1,0 +1,98 @@
+[
+  {
+    "id": "primeira-medicao-confiavel",
+    "name": "Primeira Medicao Confiavel",
+    "description": "Realizou uma medicao eletrica escolhendo escala, modo e pontos de teste corretamente.",
+    "points": 20,
+    "aura": 5,
+    "type": "individual"
+  },
+  {
+    "id": "lei-de-ohm-nao-e-opiniao",
+    "name": "Lei de Ohm Nao e Opiniao",
+    "description": "Aplicou relacao entre tensao, corrente e resistencia para justificar uma decisao de circuito.",
+    "points": 30,
+    "aura": 8,
+    "type": "individual"
+  },
+  {
+    "id": "montagem-com-postura",
+    "name": "Montagem com Postura",
+    "description": "Montou ou revisou um computador respeitando compatibilidade, organizacao e seguranca.",
+    "points": 35,
+    "aura": 6,
+    "type": "individual"
+  },
+  {
+    "id": "sistema-recuperado",
+    "name": "Sistema Recuperado",
+    "description": "Diagnosticou falha de boot, particao, driver ou recuperacao sem formatar por impulso.",
+    "points": 40,
+    "aura": 10,
+    "type": "individual"
+  },
+  {
+    "id": "diagnostico-sem-troca-cega",
+    "name": "Diagnostico sem Troca Cega",
+    "description": "Identificou defeito usando evidencias fisicas ou software antes de substituir componentes.",
+    "points": 45,
+    "aura": 10,
+    "type": "individual"
+  },
+  {
+    "id": "rede-em-pe",
+    "name": "Rede em Pe",
+    "description": "Configurou, testou ou explicou uma rede considerando IP, dispositivos e seguranca basica.",
+    "points": 35,
+    "aura": 7,
+    "type": "individual"
+  },
+  {
+    "id": "smartphone-na-mesa",
+    "name": "Smartphone na Mesa",
+    "description": "Executou diagnostico mobile com atencao a bateria, conectores, software e ordem de servico.",
+    "points": 35,
+    "aura": 7,
+    "type": "individual"
+  },
+  {
+    "id": "algoritmo-antes-do-fio",
+    "name": "Algoritmo Antes do Fio",
+    "description": "Resolveu a logica do problema antes de montar o circuito ou escrever o sketch final.",
+    "points": 30,
+    "aura": 6,
+    "type": "individual"
+  },
+  {
+    "id": "sensor-atuador-funcionando",
+    "name": "Sensor e Atuador Funcionando",
+    "description": "Criou um circuito Arduino em que entrada, processamento e saida trabalham juntos.",
+    "points": 45,
+    "aura": 9,
+    "type": "individual"
+  },
+  {
+    "id": "prototipo-iot",
+    "name": "Prototipo IoT",
+    "description": "Desenvolveu automacao funcional envolvendo leitura, resposta e aplicacao no cotidiano.",
+    "points": 50,
+    "aura": 12,
+    "type": "individual"
+  },
+  {
+    "id": "sucata-com-proposito",
+    "name": "Sucata com Proposito",
+    "description": "Reaproveitou componente descartado em um projeto funcional com justificativa tecnica.",
+    "points": 40,
+    "aura": 12,
+    "type": "individual"
+  },
+  {
+    "id": "projeto-documentado",
+    "name": "Projeto Documentado",
+    "description": "Entregou projeto final com planejamento, montagem, codigo e documentacao compreensivel.",
+    "points": 60,
+    "aura": 15,
+    "type": "mixed"
+  }
+]

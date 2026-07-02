@@ -1,0 +1,43 @@
+---
+import '../../styles/globals.css';
+import '../../styles/components.css';
+import { withBase } from '../../lib/url';
+
+type Props = {
+  title: string;
+  description?: string;
+};
+
+const { title, description = 'Dashboard escolar gamificado de alunos e turmas.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | coreboard</title>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="app-header">
+        <div class="header-inner">
+          <a class="brand" href={withBase('/')}>
+            <img class="brand-logo" src={withBase('/png/coreboard_logo.png')} alt="coreboard" />
+          </a>
+          <nav class="main-nav" aria-label="Navegacao principal">
+            <a href={withBase('/')}>Dashboard</a>
+            <a href={withBase('/ranking-alunos/')}>Alunos</a>
+            <a href={withBase('/ranking-turmas/')}>Turmas</a>
+            <a href={withBase('/busca/')}>Busca</a>
+            <a href={withBase('/professor/')}>Professor</a>
+          </nav>
+        </div>
+      </header>
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

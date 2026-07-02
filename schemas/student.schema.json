@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "fullName",
+    "avatarPath",
+    "classId",
+    "pointsTotal",
+    "aura",
+    "achievements",
+    "badges"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "fullName": { "type": "string", "minLength": 2 },
+    "nickname": { "type": "string" },
+    "avatarPath": { "type": "string", "pattern": "^/" },
+    "classId": { "type": "string" },
+    "isPublicProfile": { "type": "boolean" },
+    "pointsTotal": { "type": "integer", "minimum": 0 },
+    "aura": { "type": "integer", "minimum": 0 },
+    "achievements": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "badges": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}

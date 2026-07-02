@@ -1,0 +1,762 @@
+---
+import AppLayout from '../components/layout/AppLayout.astro';
+import MainBanner from '../components/layout/MainBanner.astro';
+import { achievements, badges, schoolClasses, students } from '../lib/data';
+---
+
+<AppLayout title="Professor">
+  <MainBanner />
+
+  <section class="teacher-shell surface" data-teacher-app>
+    <div class="teacher-login" data-login-panel>
+      <div>
+        <p class="eyebrow">Acesso do professor</p>
+        <h2>Entrar no painel</h2>
+        <p>
+          O painel salva alteracoes diretamente no GitHub usando um token informado pelo professor.
+          O token nao fica no codigo do site.
+        </p>
+      </div>
+      <form class="teacher-form" data-login-form>
+        <label>Login<input name="user" autocomplete="username" required /></label>
+        <label>Senha<input name="password" type="password" autocomplete="current-password" required /></label>
+        <button class="button" type="submit">Entrar</button>
+        <p class="form-message" data-login-message></p>
+      </form>
+    </div>
+
+    <div class="teacher-app" data-admin-panel hidden>
+      <div class="teacher-toolbar">
+        <div>
+          <p class="eyebrow">Persistencia via GitHub</p>
+          <h2>Controle do coreboard</h2>
+          <p>Edite os dados e salve direto no repositorio. O GitHub Pages publica a nova build em seguida.</p>
+        </div>
+        <div class="teacher-actions">
+          <button class="button" type="button" data-save-github>Salvar no GitHub</button>
+          <button class="button secondary" type="button" data-load-github>Carregar do GitHub</button>
+          <button class="button secondary" type="button" data-reset-draft>Descartar rascunho</button>
+          <button class="button danger" type="button" data-logout>Sair</button>
+        </div>
+      </div>
+
+      <form class="teacher-form github-config" data-github-form>
+        <label>Owner/usuario GitHub<input name="owner" placeholder="ex.: profdoglas" required /></label>
+        <label>Repositorio<input name="repo" placeholder="ex.: coreboard" required /></label>
+        <label>Branch<input name="branch" value="main" required /></label>
+        <label>Token GitHub<input name="token" type="password" placeholder="fine-grained token com Contents read/write" required /></label>
+        <button class="button secondary" type="submit">Salvar configuracao</button>
+      </form>
+      <p class="form-message" data-sync-message></p>
+
+      <div class="teacher-tabs" role="tablist" aria-label="Secoes do painel">
+        <button type="button" class="active" data-tab="students">Alunos</button>
+        <button type="button" data-tab="points">Pontos e aura</button>
+        <button type="button" data-tab="classes">Turmas</button>
+        <button type="button" data-tab="badges">Badges</button>
+        <button type="button" data-tab="achievements">Conquistas</button>
+      </div>
+
+      <section class="teacher-section active" data-section="students">
+        <div class="admin-grid">
+          <div>
+            <div class="section-header">
+              <div>
+                <h2>Alunos</h2>
+                <p>Cadastre perfis, turma, avatar, pontos, aura, badges e conquistas.</p>
+              </div>
+              <button class="button" type="button" data-new-student>Novo aluno</button>
+            </div>
+            <div class="admin-list" data-students-list></div>
+          </div>
+          <form class="teacher-form admin-editor" data-student-form></form>
+        </div>
+      </section>
+
+      <section class="teacher-section" data-section="points">
+        <div class="admin-grid">
+          <form class="teacher-form admin-editor" data-points-form>
+            <h2>Lancar pontos ou aura</h2>
+            <label>Aluno<select name="studentId" required></select></label>
+            <label>Tipo<select name="kind"><option value="points">Pontos totais</option><option value="aura">Aura</option></select></label>
+            <label>Valor<input name="amount" type="number" step="1" required /></label>
+            <button class="button" type="submit">Aplicar</button>
+            <p class="form-message" data-points-message></p>
+          </form>
+          <div>
+            <div class="section-header">
+              <div>
+                <h2>Ranking em tempo real</h2>
+                <p>Previa local antes do commit.</p>
+              </div>
+            </div>
+            <div class="admin-list" data-points-preview></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="teacher-section" data-section="classes">
+        <div class="admin-grid">
+          <div>
+            <div class="section-header">
+              <div>
+                <h2>Turmas</h2>
+                <p>Crie uma turma antes de cadastrar alunos.</p>
+              </div>
+              <button class="button" type="button" data-new-class>Nova turma</button>
+            </div>
+            <div class="admin-list" data-classes-list></div>
+          </div>
+          <form class="teacher-form admin-editor" data-class-form></form>
+        </div>
+      </section>
+
+      <section class="teacher-section" data-section="badges">
+        <div class="admin-grid">
+          <div>
+            <div class="section-header">
+              <div>
+                <h2>Badges</h2>
+                <p>Selos tecnicos, memes internos e marcos de modulo.</p>
+              </div>
+              <button class="button" type="button" data-new-badge>Novo badge</button>
+            </div>
+            <div class="admin-list" data-badges-list></div>
+          </div>
+          <form class="teacher-form admin-editor" data-badge-form></form>
+        </div>
+      </section>
+
+      <section class="teacher-section" data-section="achievements">
+        <div class="admin-grid">
+          <div>
+            <div class="section-header">
+              <div>
+                <h2>Conquistas</h2>
+                <p>Marcos que podem atribuir pontos e aura.</p>
+              </div>
+              <button class="button" type="button" data-new-achievement>Nova conquista</button>
+            </div>
+            <div class="admin-list" data-achievements-list></div>
+          </div>
+          <form class="teacher-form admin-editor" data-achievement-form></form>
+        </div>
+      </section>
+    </div>
+  </section>
+</AppLayout>
+
+<script
+  is:inline
+  define:vars={{ initialStudents: students, initialClasses: schoolClasses, initialBadges: badges, initialAchievements: achievements }}
+>
+  const AUTH_USER = 'profdoglas';
+  const AUTH_PASSWORD_SHA256 = '90af063301fbfd4b616eb99ef7792842e880216452cf0e84e312bc7114893156';
+  const STORAGE_KEY = 'coreboard-draft-v2';
+  const CONFIG_KEY = 'coreboard-github-config-v1';
+  const SESSION_KEY = 'coreboard-teacher-authenticated';
+  const DATA_FILES = {
+    students: 'data/students.json',
+    classes: 'data/classes.json',
+    badges: 'data/badges.json',
+    achievements: 'data/achievements.json'
+  };
+
+  const defaults = {
+    students: initialStudents,
+    classes: initialClasses,
+    badges: initialBadges,
+    achievements: initialAchievements
+  };
+
+  let state = loadState();
+  let selectedStudentId = state.students[0]?.id ?? '';
+  let selectedClassId = state.classes[0]?.id ?? '';
+  let selectedBadgeId = state.badges[0]?.id ?? '';
+  let selectedAchievementId = state.achievements[0]?.id ?? '';
+
+  const loginPanel = document.querySelector('[data-login-panel]');
+  const adminPanel = document.querySelector('[data-admin-panel]');
+  const loginForm = document.querySelector('[data-login-form]');
+  const loginMessage = document.querySelector('[data-login-message]');
+  const syncMessage = document.querySelector('[data-sync-message]');
+  const githubForm = document.querySelector('[data-github-form]');
+  const studentForm = document.querySelector('[data-student-form]');
+  const classForm = document.querySelector('[data-class-form]');
+  const badgeForm = document.querySelector('[data-badge-form]');
+  const achievementForm = document.querySelector('[data-achievement-form]');
+  const pointsForm = document.querySelector('[data-points-form]');
+
+  function loadState() {
+    try {
+      const draft = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null');
+      if (draft?.students && draft?.classes && draft?.badges && draft?.achievements) return draft;
+    } catch {}
+    return structuredClone(defaults);
+  }
+
+  function persist() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function setSyncMessage(message, isError = false) {
+    syncMessage.textContent = message;
+    syncMessage.classList.toggle('error', isError);
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function slugify(value) {
+    return String(value)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || `item-${Date.now()}`;
+  }
+
+  async function sha256(value) {
+    const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+    return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  function displayName(student) {
+    return student.nickname?.trim() || student.fullName;
+  }
+
+  function level(points) {
+    return Math.max(1, Math.floor(points / 100) + 1);
+  }
+
+  function className(classId) {
+    return state.classes.find((schoolClass) => schoolClass.id === classId)?.name ?? 'Turma nao informada';
+  }
+
+  function splitIds(value) {
+    return String(value ?? '')
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  function showAdmin() {
+    loginPanel.hidden = true;
+    adminPanel.hidden = false;
+    hydrateGithubForm();
+    renderAll();
+  }
+
+  function showLogin() {
+    loginPanel.hidden = false;
+    adminPanel.hidden = true;
+  }
+
+  loginForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(loginForm);
+    const user = String(formData.get('user') ?? '').trim();
+    const password = String(formData.get('password') ?? '');
+    if (user === AUTH_USER && (await sha256(password)) === AUTH_PASSWORD_SHA256) {
+      sessionStorage.setItem(SESSION_KEY, 'true');
+      loginForm.reset();
+      loginMessage.textContent = '';
+      showAdmin();
+      return;
+    }
+    loginMessage.textContent = 'Login ou senha invalidos.';
+  });
+
+  document.querySelector('[data-logout]')?.addEventListener('click', () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    showLogin();
+  });
+
+  githubForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(githubForm));
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(data));
+    setSyncMessage('Configuracao salva neste navegador.');
+  });
+
+  document.querySelector('[data-teacher-app]')?.addEventListener('click', async (event) => {
+    const target = event.target.closest('button');
+    if (!target) return;
+
+    if (target.dataset.tab) {
+      document.querySelectorAll('[data-tab]').forEach((tab) => tab.classList.toggle('active', tab === target));
+      document.querySelectorAll('[data-section]').forEach((section) => {
+        section.classList.toggle('active', section.dataset.section === target.dataset.tab);
+      });
+    }
+
+    if (target.dataset.newStudent !== undefined) selectedStudentId = '';
+    if (target.dataset.editStudent) selectedStudentId = target.dataset.editStudent;
+    if (target.dataset.deleteStudent) {
+      state.students = state.students.filter((student) => student.id !== target.dataset.deleteStudent);
+      selectedStudentId = state.students[0]?.id ?? '';
+      persist();
+    }
+
+    if (target.dataset.newClass !== undefined) selectedClassId = '';
+    if (target.dataset.editClass) selectedClassId = target.dataset.editClass;
+    if (target.dataset.deleteClass) {
+      state.classes = state.classes.filter((schoolClass) => schoolClass.id !== target.dataset.deleteClass);
+      selectedClassId = state.classes[0]?.id ?? '';
+      persist();
+    }
+
+    if (target.dataset.newBadge !== undefined) selectedBadgeId = '';
+    if (target.dataset.editBadge) selectedBadgeId = target.dataset.editBadge;
+    if (target.dataset.deleteBadge) {
+      state.badges = state.badges.filter((badge) => badge.id !== target.dataset.deleteBadge);
+      state.students = state.students.map((student) => ({
+        ...student,
+        badges: student.badges.filter((id) => id !== target.dataset.deleteBadge)
+      }));
+      selectedBadgeId = state.badges[0]?.id ?? '';
+      persist();
+    }
+
+    if (target.dataset.newAchievement !== undefined) selectedAchievementId = '';
+    if (target.dataset.editAchievement) selectedAchievementId = target.dataset.editAchievement;
+    if (target.dataset.deleteAchievement) {
+      state.achievements = state.achievements.filter((achievement) => achievement.id !== target.dataset.deleteAchievement);
+      state.students = state.students.map((student) => ({
+        ...student,
+        achievements: student.achievements.filter((id) => id !== target.dataset.deleteAchievement)
+      }));
+      selectedAchievementId = state.achievements[0]?.id ?? '';
+      persist();
+    }
+
+    if (target.dataset.resetDraft !== undefined) {
+      localStorage.removeItem(STORAGE_KEY);
+      state = structuredClone(defaults);
+      selectedStudentId = state.students[0]?.id ?? '';
+      selectedClassId = state.classes[0]?.id ?? '';
+      selectedBadgeId = state.badges[0]?.id ?? '';
+      selectedAchievementId = state.achievements[0]?.id ?? '';
+      setSyncMessage('Rascunho local descartado.');
+    }
+
+    if (target.dataset.saveGithub !== undefined) await saveToGithub();
+    if (target.dataset.loadGithub !== undefined) await loadFromGithub();
+
+    renderAll();
+  });
+
+  studentForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(studentForm));
+    const id = String(data.id || slugify(data.fullName));
+    const student = {
+      id,
+      slug: slugify(data.slug || data.fullName || id),
+      fullName: String(data.fullName ?? ''),
+      nickname: String(data.nickname ?? ''),
+      avatarPath: String(data.avatarPath ?? '/avatars/alunos/default.svg'),
+      classId: String(data.classId ?? ''),
+      isPublicProfile: data.isPublicProfile === 'on',
+      pointsTotal: Number(data.pointsTotal ?? 0),
+      aura: Number(data.aura ?? 0),
+      achievements: splitIds(data.achievements),
+      badges: splitIds(data.badges)
+    };
+
+    state.students = state.students.some((item) => item.id === id)
+      ? state.students.map((item) => (item.id === id ? student : item))
+      : [...state.students, student];
+    selectedStudentId = id;
+    persist();
+    renderAll();
+  });
+
+  classForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(classForm));
+    const id = String(data.id || slugify(data.name));
+    const schoolClass = {
+      id,
+      slug: slugify(data.slug || data.name || id),
+      name: String(data.name ?? ''),
+      avatarPath: String(data.avatarPath ?? '/avatars/turmas/turma-alpha.svg')
+    };
+    state.classes = state.classes.some((item) => item.id === id)
+      ? state.classes.map((item) => (item.id === id ? schoolClass : item))
+      : [...state.classes, schoolClass];
+    selectedClassId = id;
+    persist();
+    renderAll();
+  });
+
+  badgeForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(badgeForm));
+    const id = String(data.id || slugify(data.name));
+    const badge = {
+      id,
+      name: String(data.name ?? ''),
+      category: String(data.category ?? 'geral'),
+      description: String(data.description ?? ''),
+      iconPath: String(data.iconPath ?? '/badges/top-semana.svg')
+    };
+    state.badges = state.badges.some((item) => item.id === id)
+      ? state.badges.map((item) => (item.id === id ? badge : item))
+      : [...state.badges, badge];
+    selectedBadgeId = id;
+    persist();
+    renderAll();
+  });
+
+  achievementForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(achievementForm));
+    const id = String(data.id || slugify(data.name));
+    const achievement = {
+      id,
+      name: String(data.name ?? ''),
+      description: String(data.description ?? ''),
+      points: Number(data.points ?? 0),
+      aura: Number(data.aura ?? 0),
+      type: String(data.type ?? 'individual')
+    };
+    state.achievements = state.achievements.some((item) => item.id === id)
+      ? state.achievements.map((item) => (item.id === id ? achievement : item))
+      : [...state.achievements, achievement];
+    selectedAchievementId = id;
+    persist();
+    renderAll();
+  });
+
+  pointsForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(pointsForm);
+    const studentId = String(formData.get('studentId') ?? '');
+    const kind = String(formData.get('kind') ?? 'points');
+    const amount = Number(formData.get('amount') ?? 0);
+    state.students = state.students.map((student) => {
+      if (student.id !== studentId) return student;
+      if (kind === 'aura') return { ...student, aura: Math.max(0, student.aura + amount) };
+      return { ...student, pointsTotal: Math.max(0, student.pointsTotal + amount) };
+    });
+    persist();
+    renderAll();
+    document.querySelector('[data-points-message]').textContent = 'Lancamento aplicado no rascunho local.';
+  });
+
+  function renderAll() {
+    renderStudentsList();
+    renderStudentForm();
+    renderPoints();
+    renderClassesList();
+    renderClassForm();
+    renderBadgesList();
+    renderBadgeForm();
+    renderAchievementsList();
+    renderAchievementForm();
+  }
+
+  function renderStudentsList() {
+    const list = document.querySelector('[data-students-list]');
+    if (!list) return;
+    const ranking = [...state.students].sort((a, b) => b.pointsTotal - a.pointsTotal || b.aura - a.aura);
+    list.innerHTML = ranking.length === 0
+      ? '<p class="empty-state surface">Nenhum aluno cadastrado ainda. Crie uma turma e depois adicione o primeiro aluno.</p>'
+      : ranking.map((student, index) => `
+        <article class="admin-row">
+          <div>
+            <strong>#${index + 1} ${escapeHtml(displayName(student))}</strong>
+            <span>${escapeHtml(className(student.classId))} - ${student.pointsTotal} pts - ${student.aura} aura - nivel ${level(student.pointsTotal)}</span>
+          </div>
+          <div class="row-actions">
+            <button type="button" class="button secondary" data-edit-student="${escapeHtml(student.id)}">Editar</button>
+            <button type="button" class="button danger" data-delete-student="${escapeHtml(student.id)}">Remover</button>
+          </div>
+        </article>
+      `).join('');
+  }
+
+  function renderStudentForm() {
+    if (!studentForm) return;
+    const student = state.students.find((item) => item.id === selectedStudentId) ?? {
+      id: '',
+      slug: '',
+      fullName: '',
+      nickname: '',
+      avatarPath: '/avatars/alunos/default.svg',
+      classId: state.classes[0]?.id ?? '',
+      isPublicProfile: true,
+      pointsTotal: 0,
+      aura: 0,
+      achievements: [],
+      badges: []
+    };
+    const classOptions = state.classes.length === 0
+      ? '<option value="">Crie uma turma primeiro</option>'
+      : state.classes.map((schoolClass) => `<option value="${escapeHtml(schoolClass.id)}" ${schoolClass.id === student.classId ? 'selected' : ''}>${escapeHtml(schoolClass.name)}</option>`).join('');
+    studentForm.innerHTML = `
+      <h2>${student.id ? 'Editar aluno' : 'Novo aluno'}</h2>
+      <label>ID<input name="id" value="${escapeHtml(student.id)}" ${student.id ? 'readonly' : ''} required /></label>
+      <label>Slug<input name="slug" value="${escapeHtml(student.slug)}" required /></label>
+      <label>Nome completo<input name="fullName" value="${escapeHtml(student.fullName)}" required /></label>
+      <label>Nickname opcional<input name="nickname" value="${escapeHtml(student.nickname ?? '')}" /></label>
+      <label>Avatar<input name="avatarPath" value="${escapeHtml(student.avatarPath)}" required /></label>
+      <label>Turma<select name="classId" required>${classOptions}</select></label>
+      <div class="form-grid">
+        <label>Pontos totais<input name="pointsTotal" type="number" value="${student.pointsTotal}" min="0" /></label>
+        <label>Aura<input name="aura" type="number" value="${student.aura}" min="0" /></label>
+      </div>
+      <label>Badges por id, separados por virgula<input name="badges" value="${escapeHtml(student.badges.join(', '))}" /></label>
+      <label>Conquistas por id, separadas por virgula<input name="achievements" value="${escapeHtml(student.achievements.join(', '))}" /></label>
+      <div class="check-row"><label><input type="checkbox" name="isPublicProfile" ${student.isPublicProfile !== false ? 'checked' : ''} /> Perfil publico</label></div>
+      <button class="button" type="submit" ${state.classes.length === 0 ? 'disabled' : ''}>Salvar aluno</button>
+    `;
+  }
+
+  function renderPoints() {
+    if (!pointsForm) return;
+    pointsForm.studentId.innerHTML = state.students.length === 0
+      ? '<option value="">Cadastre um aluno primeiro</option>'
+      : state.students.map((student) => `<option value="${escapeHtml(student.id)}">${escapeHtml(displayName(student))}</option>`).join('');
+    const preview = document.querySelector('[data-points-preview]');
+    preview.innerHTML = state.students.length === 0
+      ? '<p class="empty-state surface">Nenhum aluno para pontuar.</p>'
+      : [...state.students].sort((a, b) => b.pointsTotal - a.pointsTotal || b.aura - a.aura).map((student, index) => `
+        <article class="admin-row">
+          <div><strong>#${index + 1} ${escapeHtml(displayName(student))}</strong><span>${escapeHtml(className(student.classId))}</span></div>
+          <strong>${student.pointsTotal} pts / ${student.aura} aura</strong>
+        </article>
+      `).join('');
+  }
+
+  function renderClassesList() {
+    const list = document.querySelector('[data-classes-list]');
+    if (!list) return;
+    list.innerHTML = state.classes.length === 0
+      ? '<p class="empty-state surface">Nenhuma turma cadastrada ainda.</p>'
+      : state.classes.map((schoolClass) => `
+        <article class="admin-row">
+          <div><strong>${escapeHtml(schoolClass.name)}</strong><span>${escapeHtml(schoolClass.id)}</span></div>
+          <div class="row-actions">
+            <button type="button" class="button secondary" data-edit-class="${escapeHtml(schoolClass.id)}">Editar</button>
+            <button type="button" class="button danger" data-delete-class="${escapeHtml(schoolClass.id)}">Remover</button>
+          </div>
+        </article>
+      `).join('');
+  }
+
+  function renderClassForm() {
+    if (!classForm) return;
+    const schoolClass = state.classes.find((item) => item.id === selectedClassId) ?? {
+      id: '',
+      slug: '',
+      name: '',
+      avatarPath: '/avatars/turmas/turma-alpha.svg'
+    };
+    classForm.innerHTML = `
+      <h2>${schoolClass.id ? 'Editar turma' : 'Nova turma'}</h2>
+      <label>ID<input name="id" value="${escapeHtml(schoolClass.id)}" ${schoolClass.id ? 'readonly' : ''} required /></label>
+      <label>Slug<input name="slug" value="${escapeHtml(schoolClass.slug)}" required /></label>
+      <label>Nome<input name="name" value="${escapeHtml(schoolClass.name)}" required /></label>
+      <label>Avatar<input name="avatarPath" value="${escapeHtml(schoolClass.avatarPath)}" required /></label>
+      <button class="button" type="submit">Salvar turma</button>
+    `;
+  }
+
+  function renderBadgesList() {
+    const list = document.querySelector('[data-badges-list]');
+    if (!list) return;
+    list.innerHTML = state.badges.map((badge) => `
+      <article class="admin-row">
+        <div><strong>${escapeHtml(badge.name)}</strong><span>${escapeHtml(badge.id)} - ${escapeHtml(badge.category)}</span></div>
+        <div class="row-actions">
+          <button type="button" class="button secondary" data-edit-badge="${escapeHtml(badge.id)}">Editar</button>
+          <button type="button" class="button danger" data-delete-badge="${escapeHtml(badge.id)}">Remover</button>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function renderBadgeForm() {
+    if (!badgeForm) return;
+    const badge = state.badges.find((item) => item.id === selectedBadgeId) ?? {
+      id: '',
+      name: '',
+      category: 'geral',
+      description: '',
+      iconPath: '/badges/top-semana.svg'
+    };
+    badgeForm.innerHTML = `
+      <h2>${badge.id ? 'Editar badge' : 'Novo badge'}</h2>
+      <label>ID<input name="id" value="${escapeHtml(badge.id)}" ${badge.id ? 'readonly' : ''} required /></label>
+      <label>Nome<input name="name" value="${escapeHtml(badge.name)}" required /></label>
+      <label>Categoria<input name="category" value="${escapeHtml(badge.category)}" required /></label>
+      <label>Descricao<input name="description" value="${escapeHtml(badge.description)}" required /></label>
+      <label>Icone<input name="iconPath" value="${escapeHtml(badge.iconPath)}" required /></label>
+      <button class="button" type="submit">Salvar badge</button>
+    `;
+  }
+
+  function renderAchievementsList() {
+    const list = document.querySelector('[data-achievements-list]');
+    if (!list) return;
+    list.innerHTML = state.achievements.map((achievement) => `
+      <article class="admin-row">
+        <div><strong>${escapeHtml(achievement.name)}</strong><span>${escapeHtml(achievement.id)} - ${achievement.points} pts / ${achievement.aura} aura</span></div>
+        <div class="row-actions">
+          <button type="button" class="button secondary" data-edit-achievement="${escapeHtml(achievement.id)}">Editar</button>
+          <button type="button" class="button danger" data-delete-achievement="${escapeHtml(achievement.id)}">Remover</button>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  function renderAchievementForm() {
+    if (!achievementForm) return;
+    const achievement = state.achievements.find((item) => item.id === selectedAchievementId) ?? {
+      id: '',
+      name: '',
+      description: '',
+      points: 0,
+      aura: 0,
+      type: 'individual'
+    };
+    achievementForm.innerHTML = `
+      <h2>${achievement.id ? 'Editar conquista' : 'Nova conquista'}</h2>
+      <label>ID<input name="id" value="${escapeHtml(achievement.id)}" ${achievement.id ? 'readonly' : ''} required /></label>
+      <label>Nome<input name="name" value="${escapeHtml(achievement.name)}" required /></label>
+      <label>Descricao<input name="description" value="${escapeHtml(achievement.description)}" required /></label>
+      <div class="form-grid">
+        <label>Pontos<input name="points" type="number" value="${achievement.points}" min="0" required /></label>
+        <label>Aura<input name="aura" type="number" value="${achievement.aura}" min="0" required /></label>
+      </div>
+      <label>Tipo<select name="type">
+        <option value="individual" ${achievement.type === 'individual' ? 'selected' : ''}>individual</option>
+        <option value="class" ${achievement.type === 'class' ? 'selected' : ''}>turma</option>
+        <option value="mixed" ${achievement.type === 'mixed' ? 'selected' : ''}>misto</option>
+      </select></label>
+      <button class="button" type="submit">Salvar conquista</button>
+    `;
+  }
+
+  function hydrateGithubForm() {
+    try {
+      const config = JSON.parse(localStorage.getItem(CONFIG_KEY) ?? '{}');
+      githubForm.owner.value = config.owner ?? '';
+      githubForm.repo.value = config.repo ?? '';
+      githubForm.branch.value = config.branch ?? 'main';
+      githubForm.token.value = config.token ?? '';
+    } catch {}
+  }
+
+  function getGithubConfig() {
+    const config = Object.fromEntries(new FormData(githubForm));
+    if (!config.owner || !config.repo || !config.branch || !config.token) {
+      throw new Error('Preencha owner, repositorio, branch e token do GitHub.');
+    }
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+    return config;
+  }
+
+  function toBase64Utf8(value) {
+    const bytes = new TextEncoder().encode(value);
+    let binary = '';
+    bytes.forEach((byte) => {
+      binary += String.fromCharCode(byte);
+    });
+    return btoa(binary);
+  }
+
+  function fromBase64Utf8(value) {
+    const binary = atob(value.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  async function githubRequest(config, path, options = {}) {
+    const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
+    const response = await fetch(options.ref ? `${url}?ref=${encodeURIComponent(options.ref)}` : url, {
+      method: options.method ?? 'GET',
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${config.token}`,
+        'X-GitHub-Api-Version': '2022-11-28'
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined
+    });
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(`GitHub ${response.status}: ${detail}`);
+    }
+    return response.json();
+  }
+
+  async function saveFile(config, path, data) {
+    let sha;
+    try {
+      const current = await githubRequest(config, path, { ref: config.branch });
+      sha = current.sha;
+    } catch (error) {
+      if (!String(error.message).includes('404')) throw error;
+    }
+    return githubRequest(config, path, {
+      method: 'PUT',
+      body: {
+        message: `coreboard: atualizar ${path}`,
+        content: toBase64Utf8(`${JSON.stringify(data, null, 2)}\n`),
+        branch: config.branch,
+        sha
+      }
+    });
+  }
+
+  async function saveToGithub() {
+    try {
+      setSyncMessage('Salvando no GitHub...');
+      const config = getGithubConfig();
+      await saveFile(config, DATA_FILES.students, state.students);
+      await saveFile(config, DATA_FILES.classes, state.classes);
+      await saveFile(config, DATA_FILES.badges, state.badges);
+      await saveFile(config, DATA_FILES.achievements, state.achievements);
+      persist();
+      setSyncMessage('Dados salvos no GitHub. Aguarde o deploy do GitHub Pages finalizar.');
+    } catch (error) {
+      setSyncMessage(error.message, true);
+    }
+  }
+
+  async function loadFromGithub() {
+    try {
+      setSyncMessage('Carregando dados do GitHub...');
+      const config = getGithubConfig();
+      const nextState = {};
+      for (const [key, path] of Object.entries(DATA_FILES)) {
+        const file = await githubRequest(config, path, { ref: config.branch });
+        nextState[key] = JSON.parse(fromBase64Utf8(file.content));
+      }
+      state = nextState;
+      persist();
+      selectedStudentId = state.students[0]?.id ?? '';
+      selectedClassId = state.classes[0]?.id ?? '';
+      selectedBadgeId = state.badges[0]?.id ?? '';
+      selectedAchievementId = state.achievements[0]?.id ?? '';
+      renderAll();
+      setSyncMessage('Dados carregados do GitHub.');
+    } catch (error) {
+      setSyncMessage(error.message, true);
+    }
+  }
+
+  if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+    showAdmin();
+  } else {
+    showLogin();
+  }
+</script>

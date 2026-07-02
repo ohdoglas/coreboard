@@ -1,0 +1,13 @@
+---
+import { withBase } from '../../lib/url';
+
+type Props = {
+  overlap?: 'animated' | 'static';
+};
+
+const { overlap = 'static' } = Astro.props;
+---
+
+<section class={`main-banner main-banner--${overlap}`} aria-label="coreboard">
+  <img src={withBase('/png/coreboard_banner_main.png')} alt="coreboard" />
+</section>

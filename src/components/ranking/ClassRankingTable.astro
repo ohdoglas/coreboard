@@ -1,0 +1,54 @@
+---
+import { formatPoints } from '../../lib/formatters';
+import { withBase } from '../../lib/url';
+import type { RankedClass } from '../../lib/types';
+
+type Props = {
+  classes: RankedClass[];
+};
+
+const { classes } = Astro.props;
+---
+
+<div class="surface table-scroll">
+  {
+    classes.length === 0 ? (
+      <p class="empty-state">Nenhuma turma cadastrada ainda.</p>
+    ) : (
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>Pos.</th>
+            <th>Turma</th>
+            <th>Score</th>
+            <th>Alunos</th>
+            <th>Pontos</th>
+            <th>Aura</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            classes.map((schoolClass) => (
+              <tr>
+                <td><span class="rank-pill">{schoolClass.rank}</span></td>
+                <td>
+                  <span class="identity">
+                    <img src={withBase(schoolClass.avatarPath)} alt={`Avatar da ${schoolClass.name}`} loading="lazy" />
+                    <span>
+                      <strong>{schoolClass.name}</strong>
+                      <span>Media: {formatPoints(schoolClass.avgPointsPerStudent)}</span>
+                    </span>
+                  </span>
+                </td>
+                <td>{schoolClass.normalizedScore}</td>
+                <td>{schoolClass.activeStudents}</td>
+                <td>{formatPoints(schoolClass.pointsTotal)}</td>
+                <td>{schoolClass.aura}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  }
+</div>

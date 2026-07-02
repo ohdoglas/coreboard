@@ -1,0 +1,110 @@
+---
+import AppLayout from '../../components/layout/AppLayout.astro';
+import BadgeGrid from '../../components/badges/BadgeGrid.astro';
+import StudentRankingTable from '../../components/ranking/StudentRankingTable.astro';
+import { achievementById, badgeById, getPublicName, students } from '../../lib/data';
+import { formatPoints, percentFromProgress } from '../../lib/formatters';
+import { getNeighbors, rankStudents } from '../../lib/ranking';
+import { withBase } from '../../lib/url';
+import type { Achievement, Badge, RankedStudent } from '../../lib/types';
+
+export function getStaticPaths() {
+  const ranking = rankStudents(students);
+  return ranking.map((student) => ({
+    params: { slug: student.slug },
+    props: { student, ranking }
+  }));
+}
+
+type Props = {
+  student: RankedStudent;
+  ranking: RankedStudent[];
+};
+
+const { student, ranking } = Astro.props;
+const isBadge = (badge: Badge | undefined): badge is Badge => Boolean(badge);
+const isAchievement = (achievement: Achievement | undefined): achievement is Achievement =>
+  Boolean(achievement);
+const studentBadges = student.badges.map((id) => badgeById.get(id)).filter(isBadge);
+const studentAchievements = student.achievements.map((id) => achievementById.get(id)).filter(isAchievement);
+const neighbors = getNeighbors(ranking, student.slug, 1);
+const progressPercent = percentFromProgress(student.pointsTotal, student.nextLevelPoints);
+---
+
+<AppLayout title={`Perfil de ${getPublicName(student)}`}>
+  <section class="profile-hero surface">
+    <img src={withBase(student.avatarPath)} alt={`Avatar de ${getPublicName(student)}`} />
+    <div>
+      <p class="eyebrow">Perfil do aluno</p>
+      <h1>{getPublicName(student)}</h1>
+      <p class="lead">
+        {student.className} - posicao global #{student.rank}. Nivel calculado pelos pontos totais,
+        com aura como marcador social do coreboard.
+      </p>
+      <div class="profile-stats">
+        <div class="mini-stat"><span>Pontos totais</span><strong>{formatPoints(student.pointsTotal)}</strong></div>
+        <div class="mini-stat"><span>Aura</span><strong>{student.aura}</strong></div>
+        <div class="mini-stat"><span>Nivel</span><strong>{student.level}</strong></div>
+        <div class="mini-stat"><span>Badges</span><strong>{student.badges.length}</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section grid two">
+    <div class="surface class-card">
+      <div class="section-header">
+        <div>
+          <h2>Proximo nivel</h2>
+          <p>{formatPoints(student.nextLevelPoints)} para o proximo marco.</p>
+        </div>
+      </div>
+      <div class="progress-track" aria-label={`Progresso ${progressPercent}%`}>
+        <div class="progress-fill" style={`width:${progressPercent}%`}></div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="section-header">
+        <div>
+          <h2>Vizinhos no ranking</h2>
+          <p>Comparacao local por pontos totais e aura.</p>
+        </div>
+      </div>
+      <StudentRankingTable students={neighbors} />
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2>Badges conquistados</h2>
+        <p>Reconhecimentos tecnicos e culturais do aluno.</p>
+      </div>
+    </div>
+    <BadgeGrid badges={studentBadges} />
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2>Conquistas</h2>
+        <p>Marcos que explicam pontos e aura acumulados.</p>
+      </div>
+    </div>
+    <div class="grid">
+      {
+        studentAchievements.length === 0 ? (
+          <p class="empty-state surface">Nenhuma conquista registrada ainda.</p>
+        ) : (
+          studentAchievements.map((achievement) => (
+            <article class="class-card surface">
+              <h3>{achievement.name}</h3>
+              <p>{achievement.description}</p>
+              <p class="metric-card__note">+{achievement.points} pontos / +{achievement.aura} aura</p>
+            </article>
+          ))
+        )
+      }
+    </div>
+  </section>
+</AppLayout>

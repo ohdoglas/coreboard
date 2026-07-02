@@ -1,0 +1,22 @@
+{
+  "name": "alunos-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "check": "astro check",
+    "validate:data": "node scripts/validate-data.mjs",
+    "build": "pnpm validate:data && astro check && astro build",
+    "preview": "astro preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "astro": "^5.11.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,23 @@
+---
+import AppLayout from '../components/layout/AppLayout.astro';
+import MainBanner from '../components/layout/MainBanner.astro';
+import StudentRankingTable from '../components/ranking/StudentRankingTable.astro';
+import { students } from '../lib/data';
+import { rankStudents } from '../lib/ranking';
+
+const globalRanking = rankStudents(students);
+---
+
+<AppLayout title="Ranking de alunos">
+  <MainBanner />
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2>Ranking global</h2>
+        <p>Ordenado por pontos totais, com aura como desempate.</p>
+      </div>
+    </div>
+    <StudentRankingTable students={globalRanking} />
+  </section>
+</AppLayout>

@@ -1,0 +1,57 @@
+---
+import { getPublicName } from '../../lib/data';
+import { formatPoints } from '../../lib/formatters';
+import { withBase } from '../../lib/url';
+import type { RankedStudent } from '../../lib/types';
+
+type Props = {
+  students: RankedStudent[];
+  limit?: number;
+};
+
+const { students, limit } = Astro.props;
+const visibleStudents = limit ? students.slice(0, limit) : students;
+---
+
+<div class="surface table-scroll">
+  {
+    visibleStudents.length === 0 ? (
+      <p class="empty-state">Nenhum aluno cadastrado ainda.</p>
+    ) : (
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>Pos.</th>
+            <th>Aluno</th>
+            <th>Turma</th>
+            <th>Pontos</th>
+            <th>Aura</th>
+            <th>Nivel</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            visibleStudents.map((student) => (
+              <tr>
+                <td><span class="rank-pill">{student.rank}</span></td>
+                <td>
+                  <a class="identity" href={withBase(`/alunos/${student.slug}/`)}>
+                    <img src={withBase(student.avatarPath)} alt={`Avatar de ${getPublicName(student)}`} loading="lazy" />
+                    <span>
+                      <strong>{getPublicName(student)}</strong>
+                      <span>{student.badges.length} badges conquistados</span>
+                    </span>
+                  </a>
+                </td>
+                <td>{student.className}</td>
+                <td>{formatPoints(student.pointsTotal)}</td>
+                <td>{student.aura}</td>
+                <td>{student.level}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  }
+</div>

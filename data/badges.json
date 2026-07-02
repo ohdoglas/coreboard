@@ -1,0 +1,93 @@
+[
+  {
+    "id": "nikola-tesla",
+    "name": "Nikola Tesla",
+    "category": "eletrica",
+    "description": "Domina corrente, tensao, Lei de Ohm e leitura de circuitos sem tratar energia como magia.",
+    "iconPath": "/badges/ajuda-tecnica.svg"
+  },
+  {
+    "id": "queimador-de-led",
+    "name": "Queimador de LED",
+    "category": "eletrica",
+    "description": "Aprendeu na pratica que polaridade, resistor e atencao salvam componentes.",
+    "iconPath": "/badges/virada.svg"
+  },
+  {
+    "id": "explodidor-de-multimetro",
+    "name": "Explodidor de Multimetro",
+    "category": "eletrica",
+    "description": "Sabe medir com metodo e respeita escala, ponta de prova e modo correto.",
+    "iconPath": "/badges/constancia.svg"
+  },
+  {
+    "id": "arquiteto-de-pc",
+    "name": "Arquiteto de PC",
+    "category": "hardware",
+    "description": "Entende placa-mae, CPU, memoria, armazenamento e compatibilidade como um sistema integrado.",
+    "iconPath": "/badges/equipe-projeto.svg"
+  },
+  {
+    "id": "cirurgiao-de-notebook",
+    "name": "Cirurgiao de Notebook",
+    "category": "manutencao",
+    "description": "Desmonta, diagnostica e remonta com metodo, sem transformar manutencao em tentativa e erro.",
+    "iconPath": "/badges/robotica.svg"
+  },
+  {
+    "id": "necromante-de-boot",
+    "name": "Necromante de Boot",
+    "category": "sistemas",
+    "description": "Recupera sistemas que nao iniciam, entende particoes, drivers e imagens de disco.",
+    "iconPath": "/badges/top-semana.svg"
+  },
+  {
+    "id": "cartografo-de-rede",
+    "name": "Cartografo de Rede",
+    "category": "redes",
+    "description": "Mapeia IP, dispositivos, cabeamento e seguranca sem se perder no caminho dos pacotes.",
+    "iconPath": "/badges/programacao.svg"
+  },
+  {
+    "id": "socorrista-mobile",
+    "name": "Socorrista Mobile",
+    "category": "mobile",
+    "description": "Diagnostica smartphones considerando bateria, BMS, software e desmontagem segura.",
+    "iconPath": "/badges/mentor.svg"
+  },
+  {
+    "id": "logica-sem-gambiarra",
+    "name": "Logica sem Gambiarra",
+    "category": "robotica",
+    "description": "Resolve problemas com algoritmos, sequencia e controle antes de culpar o codigo.",
+    "iconPath": "/badges/mestre-logica.svg"
+  },
+  {
+    "id": "domador-de-arduino",
+    "name": "Domador de Arduino",
+    "category": "arduino",
+    "description": "Integra sensores, atuadores e sketches em prototipos que respondem ao mundo real.",
+    "iconPath": "/badges/robotica.svg"
+  },
+  {
+    "id": "porteiro-rfid",
+    "name": "Porteiro RFID",
+    "category": "iot",
+    "description": "Construiu ou compreendeu controle de acesso, travas e automacoes orientadas a evento.",
+    "iconPath": "/badges/parceiro.svg"
+  },
+  {
+    "id": "engenheiro-do-improviso",
+    "name": "Engenheiro do Improviso",
+    "category": "sustentabilidade",
+    "description": "Reaproveita componentes com criterio tecnico e transforma descarte em prototipo funcional.",
+    "iconPath": "/badges/constancia.svg"
+  },
+  {
+    "id": "projeto-finalista",
+    "name": "Projeto Finalista",
+    "category": "projeto",
+    "description": "Planejou, montou, programou e documentou um projeto robótico com maturidade tecnica.",
+    "iconPath": "/badges/equipe-projeto.svg"
+  }
+]

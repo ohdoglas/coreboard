@@ -1,0 +1,24 @@
+---
+import { withBase } from '../../lib/url';
+import type { Badge } from '../../lib/types';
+
+type Props = {
+  badges: Badge[];
+};
+
+const { badges } = Astro.props;
+---
+
+<div class="badges-grid">
+  {
+    badges.map((badge) => (
+      <article class="badge-card surface">
+        <img src={withBase(badge.iconPath)} alt="" loading="lazy" />
+        <div>
+          <strong>{badge.name}</strong>
+          <span>{badge.description}</span>
+        </div>
+      </article>
+    ))
+  }
+</div>

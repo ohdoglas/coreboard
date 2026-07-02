@@ -1,0 +1,33 @@
+---
+import AppLayout from '../components/layout/AppLayout.astro';
+import MainBanner from '../components/layout/MainBanner.astro';
+import ClassRankingTable from '../components/ranking/ClassRankingTable.astro';
+import BadgeGrid from '../components/badges/BadgeGrid.astro';
+import { badgeById, schoolClasses, students } from '../lib/data';
+import { rankClasses } from '../lib/ranking';
+import type { Badge } from '../lib/types';
+
+const classRanking = rankClasses(schoolClasses, students);
+const isBadge = (badge: Badge | undefined): badge is Badge => Boolean(badge);
+const collectiveBadges = [...new Set(students.flatMap((student) => student.badges))]
+  .map((id) => badgeById.get(id))
+  .filter(isBadge);
+---
+
+<AppLayout title="Ranking de turmas">
+  <MainBanner />
+
+  <section class="section">
+    <ClassRankingTable classes={classRanking} />
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <h2>Badges coletivos</h2>
+        <p>Badges presentes nos alunos cadastrados.</p>
+      </div>
+    </div>
+    <BadgeGrid badges={collectiveBadges} />
+  </section>
+</AppLayout>
