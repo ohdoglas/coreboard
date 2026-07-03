@@ -289,6 +289,26 @@ import { achievements, badges, schoolClasses, students } from '../lib/data';
     const target = event.target.closest('button');
     if (!target) return;
 
+    const isPanelAction =
+      target.dataset.tab !== undefined ||
+      target.dataset.newStudent !== undefined ||
+      target.dataset.editStudent !== undefined ||
+      target.dataset.deleteStudent !== undefined ||
+      target.dataset.newClass !== undefined ||
+      target.dataset.editClass !== undefined ||
+      target.dataset.deleteClass !== undefined ||
+      target.dataset.newBadge !== undefined ||
+      target.dataset.editBadge !== undefined ||
+      target.dataset.deleteBadge !== undefined ||
+      target.dataset.newAchievement !== undefined ||
+      target.dataset.editAchievement !== undefined ||
+      target.dataset.deleteAchievement !== undefined ||
+      target.dataset.resetDraft !== undefined ||
+      target.dataset.saveGithub !== undefined ||
+      target.dataset.loadGithub !== undefined;
+
+    if (!isPanelAction) return;
+
     if (target.dataset.tab) {
       document.querySelectorAll('[data-tab]').forEach((tab) => tab.classList.toggle('active', tab === target));
       document.querySelectorAll('[data-section]').forEach((section) => {
