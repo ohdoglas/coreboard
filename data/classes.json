@@ -4,5 +4,17 @@
     "slug": "teinf2025",
     "name": "TEINF202519001 - Informática",
     "avatarPath": "/avatars/turmas/TEINF2025.svg"
+  },
+  {
+    "id": "SBHW202608",
+    "slug": "sbhw202608",
+    "name": "SBHW202608001 - Hardware",
+    "avatarPath": "/avatars/turmas/SBHW202608.svg"
+  },
+  {
+    "id": "SBHW202415",
+    "slug": "sbhw202415",
+    "name": "SBHW2024150001 - Hardware",
+    "avatarPath": "/avatars/turmas/SBHW202415.svg"
   }
 ]
